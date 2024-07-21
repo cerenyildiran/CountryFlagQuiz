@@ -1,6 +1,8 @@
 <!DOCTYPE html>
+<html lang="tr"> 
 
 <head>
+    <meta charset="UTF-8"> 
     <title>Quiz Page</title>
     <link rel="stylesheet" href="css/style.css">
 </head>
@@ -11,22 +13,20 @@
     </nav>
     <div class="main-container">
         <div class="question-card">
-            <h2 id="question">
-                </h3>
-                <img id="flag-image" src="" alt="">
-                <p id="time-remaining">Time: <span id="countdown">15</span> second</p>
-                <ul id="answers">
-                    <li><button class="answer"></button></li>
-                    <li><button class="answer"></button></li>
-                    <li><button class="answer"></button></li>
-                    <li><button class="answer"></button></li>
-                </ul>
-                <div class="go-leader"></div>
-                
+            <h2 id="question"> Question </h2> 
+            <img id="flag-image" src="path/to/image.jpg" alt="Flag"> 
+            <p id="time-remaining">Time: <span id="countdown">15</span> seconds</p>
+            <ul id="answers">
+                <li><button class="answer">Answer 1</button></li>
+                <li><button class="answer">Answer 2</button></li>
+                <li><button class="answer">Answer 3</button></li>
+                <li><button class="answer">Answer 4</button></li>
+            </ul>
         </div>
         <div class="results">
             <h2>Results</h2>
             <ul class="result-list">
+             
             </ul>
         </div>
         
@@ -34,7 +34,6 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="js/questions.js"></script>
     <script src="js/quiz.js"></script>
-
 </body>
 
 </html>

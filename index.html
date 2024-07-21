@@ -1,5 +1,8 @@
 <!DOCTYPE html>
+<html lang="en"> 
 <head>
+    <meta charset="UTF-8"> 
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
     <title>Flag Quiz</title>
     <link rel="stylesheet" href="css/style.css">
 </head>
@@ -10,7 +13,7 @@
     <div class="main-container">
         <h1>Who Are You?</h1>
         <div class="nickname-container">
-            <input type="text" id="nickname" placeholder="Enter your nickname" placeholder="Enter your nickname" onkeydown="if (event.keyCode === 13) saveNicknameAndRedirect()">
+            <input type="text" id="nickname" placeholder="Enter your nickname" onkeydown="if (event.keyCode === 13) saveNicknameAndRedirect()">
         </div>
         <button type="submit" class="button" onclick="saveNicknameAndRedirect()">Send</button>
         <div class="box-warning"><p></p></div>
@@ -19,15 +22,15 @@
         <div class="info">
             <p>Welcome to the Quiz! Get ready to answer some questions.</p>
             <ul>
-                <li> You only have 15 seconds.</li>
-                <li> Your goal is to answer so many questions as possible correctly.</li>
-                <li> Once you've fixed your answer, you won't be able to choose another answer.</li>
-                <li> After the questions are finished, a window will appear showing the number of your correct answer. </li>
+                <li>You only have 15 seconds.</li>
+                <li>Your goal is to answer as many questions as possible correctly.</li>
+                <li>Once you've fixed your answer, you won't be able to choose another answer.</li>
+                <li>After the questions are finished, a window will appear showing the number of your correct answers.</li>
             </ul>
             <button class="button" onclick="hideQuizInfo()">OK</button>
-        </div> 
+        </div>
     </div>
-    
+
     <script src="js/index.js"></script>
 </body>
 </html>
