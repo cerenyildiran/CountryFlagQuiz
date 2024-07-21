@@ -127,7 +127,7 @@ body {
     left: 50%;
     transform: translate(-50%, -50%);
     width: 400px;
-    height: 320px;
+    height: auto;
     background: rgba(255, 255, 255);
     z-index: 9999;
     text-align: center;
@@ -229,4 +229,65 @@ body {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
     max-width: 500px;
     margin: 0 auto;
+}
+
+
+
+/* For mobile */
+@media (max-width: 992px) {
+    body {
+        font-size: 48px!important;
+    }
+    .navbar {
+        height: auto;
+        padding: 1.5rem 3rem;
+    }
+    .navbar-brand {
+        font-size: 5rem;
+    }
+    .nickname-container {
+        width: 85%;
+        text-align: center;
+    }
+    #nickname {
+        width: 90% !important;
+        padding: 1.5rem;
+        font-size: 48px;
+        margin-bottom: 2rem;
+    }
+    .button {
+        font-size: 48px;
+        padding: 30px 40px;
+    }
+    .info, .question-card, .results {
+        width: 90%;
+    }
+    .result-list li {
+        font-size: 48px;
+    }
+    .question-card {
+        max-width: 85%;
+        max-height: 90%;
+    }
+    .answer {
+        font-size: 46px;
+        padding: 20px !important;
+        margin: 30px 0 !important;
+    }
+    .question-card .answer:hover {
+        font-size: 48px;
+        
+    }
+    .question-card h2, .results h2 {
+        font-size: 64px;
+    }
+    .quiz-info {
+        padding-top: 5%;
+        padding-bottom: 5%;
+    }
+    #flag-image {
+        max-width: 100%;
+        max-height: 100%;
+
+    }
 }
