@@ -7,17 +7,24 @@
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
+    <!-- Navigation bar with a brand link to the homepage -->
     <nav class="navbar">
         <div class="navbar-brand"><a href="index.html">FlagQuiz</a></div>
     </nav>
+
+    <!-- Main container for user input -->
     <div class="main-container">
         <h1>Who Are You?</h1>
         <div class="nickname-container">
+            <!-- Input field for entering nickname -->
             <input type="text" id="nickname" placeholder="Enter your nickname" onkeydown="if (event.keyCode === 13) saveNicknameAndRedirect()">
         </div>
+        <!-- Submit button for nickname -->
         <button type="submit" class="button" onclick="saveNicknameAndRedirect()">Send</button>
-        <div class="box-warning"><p></p></div>
+        <div class="box-warning"><p></p></div> <!-- Warning message container -->
     </div>
+
+    <!-- Quiz information section with instructions -->
     <div class="quiz-info">
         <div class="info">
             <p>Welcome to the Quiz! Get ready to answer some questions.</p>
@@ -27,10 +34,12 @@
                 <li>Once you've fixed your answer, you won't be able to choose another answer.</li>
                 <li>After the questions are finished, a window will appear showing the number of your correct answers.</li>
             </ul>
+            <!-- Button to close the quiz info section -->
             <button class="button" onclick="hideQuizInfo()">OK</button>
         </div>
     </div>
 
+    <!-- Link to the JavaScript file handling nickname input -->
     <script src="js/index.js"></script>
 </body>
 </html>
