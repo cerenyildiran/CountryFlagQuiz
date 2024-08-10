@@ -5,35 +5,51 @@
     <meta charset="UTF-8"> 
     <title>Quiz Page</title>
     <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" href="path/to/favicon.ico"> <!-- Favicon for the browser tab -->
+
 </head>
 
 <body>
+    <!-- Navigation bar with a brand link to the homepage -->
     <nav class="navbar">
         <div class="navbar-brand"><a href="index.html">FlagQuiz</a></div>
     </nav>
+
+    <!-- Main container for the quiz content -->
     <div class="main-container">
+        <!-- Question card displaying the question, flag image, and possible answers -->
         <div class="question-card">
-            <h2 id="question"> Question </h2> 
-            <img id="flag-image" src="path/to/image.jpg" alt="Flag"> 
-            <p id="time-remaining">Time: <span id="countdown">15</span> seconds</p>
+            <h2 id="question"> Question </h2> <!-- Placeholder for the quiz question -->
+            <img id="flag-image" src="path/to/image.jpg" alt="Flag"> <!-- Placeholder for the flag image -->
+            <p id="time-remaining">Time: <span id="countdown">15</span> seconds</p> <!-- Countdown timer -->
             <ul id="answers">
+                <!-- Placeholder for quiz answer buttons -->
                 <li><button class="answer">Answer 1</button></li>
                 <li><button class="answer">Answer 2</button></li>
                 <li><button class="answer">Answer 3</button></li>
                 <li><button class="answer">Answer 4</button></li>
             </ul>
         </div>
-        <div class="results">
+
+        <!-- Results section that is hidden by default, becomes visible after the quiz ends -->
+        <div class="results" style="display: none;">
             <h2>Results</h2>
             <ul class="result-list">
-             
+                <!-- Quiz results will be displayed here -->
             </ul>
+        </div>
+
+        <!-- Container for the restart button, hidden by default -->
+        <div class="go-leader" style="display: none;">
+            <button class="button" id="restart-button">Restart</button> <!-- Restart button -->
         </div>
         
     </div>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="js/questions.js"></script>
-    <script src="js/quiz.js"></script>
+
+    <!-- Including external JavaScript libraries and files -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> <!-- jQuery library -->
+    <script src="js/questions.js"></script> <!-- Script containing quiz questions -->
+    <script src="js/quiz.js"></script> <!-- Main quiz script -->
 </body>
 
 </html>

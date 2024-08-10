@@ -1,115 +1,136 @@
-
 $(document).ready(function () {
-    var currentQuestion = 0;
-    var score = 0;
-    var countdown = 15;
+    var currentQuestion = 0;  // Tracks the current question index
+    var score = 0;  // Tracks the user's score
+    var countdown = 15;  // Countdown timer starts at 15 seconds
     var countdownInterval;
+
+    // Get the nickname from the URL parameters, default to "User" if not found
+    const urlParams = new URLSearchParams(window.location.search);
+    const nickname = urlParams.get("nickname") || "User";
+
+    // Clear the localStorage when the page is reloaded
+    localStorage.clear();
+
+    // Function to start the countdown timer for each question
     function startCountdown() {
-        countdown = 15;
+        countdown = 15;  // Reset countdown to 15 seconds
         countdownInterval = setInterval(function () {
-            countdown--;
-            $("#countdown").text(countdown);
+            countdown--;  // Decrease the countdown by 1 each second
+            $("#countdown").text(countdown);  // Update the countdown display
 
             if (countdown === 0) {
                 clearInterval(countdownInterval);
-                checkAnswer(-1);
+                checkAnswer(-1);  // Automatically consider the answer wrong when time runs out
             }
         }, 1000);
     }
 
+    // Function to load the current question's flag image
     function loadImages() {
-        var current = questions[currentQuestion];
-        $("#flag-image").attr("src", current.image);
+        var current = questions[currentQuestion];  // Get the current question object
+        $("#flag-image").attr("src", current.image);  // Update the flag image source
     }
 
+    // Function to display the current question and possible answers
     function displayQuestion() {
-        if (currentQuestion >= 0 && currentQuestion < questions.length) {
-            var current = questions[currentQuestion];
-            $("#question").text(current.question);
-            $("#countdown").text(countdown);
-            var answersList = $("#answers").empty();
-    
+        // Clear the results list before displaying a new question
+        $(".result-list").empty();
+
+        if (currentQuestion < questions.length) {
+            var current = questions[currentQuestion];  // Get the current question object
+            $("#question").text(current.question);  // Display the current question
+            $("#countdown").text(countdown);  // Reset the countdown display
+            var answersList = $("#answers").empty();  // Clear previous answers
+
+            // Display each possible answer as a button
             current.answers.forEach(function (answer, index) {
                 var listItem = $("<li></li>");
                 var answerButton = $("<button class='answer'></button>").text(answer);
                 answerButton.on("click", function () {
-                    checkAnswer(index);
+                    checkAnswer(index);  // Check the selected answer when clicked
                 });
-    
+
                 listItem.append(answerButton);
                 answersList.append(listItem);
             });
-            loadImages();
-            startCountdown();
+            loadImages();  // Load the flag image for the current question
+            startCountdown();  // Start the countdown timer
         } else {
-            console.log("Quiz finish.");
+            goToResults();  // Show results when all questions are answered
+            
+            // Dynamically create Restart button at the end of the quiz
+            $(".go-leader").html(`
+                <button class="button" id="restart-button">Restart</button>
+            `);
+    
+            $("#restart-button").click(function () {
+                quizRestart();  // Restart the quiz when the button is clicked
+            });
+    
+            // Show the Restart button
+            $(".go-leader").show();
         }
     }
-    
 
-
+    // Function to check the user's answer and update the score
     function checkAnswer(userAnswerIndex) {
-        clearInterval(countdownInterval);
+        clearInterval(countdownInterval);  // Stop the countdown timer
         if (userAnswerIndex === questions[currentQuestion].correctAnswer) {
-            score++;
+            score++;  // Increase the score if the answer is correct
         }
-        currentQuestion++;
+        currentQuestion++;  // Move to the next question
         if (currentQuestion < questions.length) {
-            displayQuestion();
+            displayQuestion();  // Display the next question
         } else {
-            $("#question").text("Quiz Finished! Result: " + score);
-            $("#answers").empty();
-            $("#flag-image").hide();
-            $("#time-remaining").hide();
-            $(".go-leader").html(`
-            <button class="button" id="results-button">See Results</button> 
-            <button class="button" id="restart-button">Restart</button>
-        `);
-            $("#results-button").click(function () {
-                goToResults();
-            });
-            $("#restart-button").click(function () {
-                quizRestart();
-            });
-            $(".go-leader").show();
-            
-            
-            const nickname = window.location.href.split("?")[1].split("=")[1];
-            let data = JSON.parse(localStorage.getItem("userData")) || [];
-            if (!data) {
-                data = [];
-            }
-            data.push({ nickname, score });
-            localStorage.setItem("userData", JSON.stringify(data));
-            console.log(data);
+            goToResults();  // Show results if all questions are answered
         }
-    }function quizRestart() {
-        currentQuestion = 0;
-        score = 0;
-        const nickname = window.location.href.split("?")[1].split("=")[1];
-        let data = JSON.parse(localStorage.getItem("userData")) || [];
-        data = data.filter(entry => entry.nickname !== nickname);
-        localStorage.setItem("userData", JSON.stringify(data));
-        $("#flag-image").show();
-        $(".go-leader").hide();
+    }
+
+    // Function to restart the quiz without refreshing the page
+    function quizRestart() {
+        currentQuestion = 0;  // Reset to the first question
+    
+        // Reset UI elements for the first question
+        $("#flag-image").show(); 
+        $("#question").text(''); // Clear the question text
+        $("#answers").empty(); // Clear the answer options
+        $(".results").hide(); // Hide the results section
+        $(".question-card").show(); // Show the question card
+
+        // Hide the Restart button
+        $("#restart-button").hide();
+    
+        // Load the first question again
         displayQuestion();
     }
 
+    // Function to display the quiz results
     function goToResults() {
-        $(".question-card").css("display", "none");
-        $(".results").css("display", "block");
+        $(".question-card").hide();  // Hide the question card
+        $(".results").show();  // Show the results section
+
+        // Save the current result to localStorage
         let userData = JSON.parse(localStorage.getItem("userData")) || [];
+        userData.push({ nickname: nickname, score: score });
+        localStorage.setItem("userData", JSON.stringify(userData));
+
+        // Sort the results and display them
         userData.sort(function (a, b) {
             return b.score - a.score;
         });
+
         var resultHTML = '';
         userData.forEach(function (user, index) {
             resultHTML += '<li>' + user.nickname + ' - ' + user.score + ' points</li>';
         });
+
         $(".result-list").html(resultHTML);
-
     }
- 
 
-    displayQuestion();
+    displayQuestion();  // Display the first question when the page loads
+
+    // Event listener for the Restart button
+    $("#restart-button").click(function () {
+        quizRestart();  // Restart the quiz when the button is clicked
+    });
 });
