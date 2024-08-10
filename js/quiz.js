@@ -13,17 +13,19 @@ $(document).ready(function () {
 
     // Function to start the countdown timer for each question
     function startCountdown() {
-        countdown = 15;  // Reset countdown to 15 seconds
+        countdown = 15;  // Set the countdown to 15 seconds each time
+        $("#countdown").text(countdown);  // Display the initial countdown value immediately
         countdownInterval = setInterval(function () {
-            countdown--;  // Decrease the countdown by 1 each second
-            $("#countdown").text(countdown);  // Update the countdown display
-
+            countdown--;  // Decrease the countdown by one every second
+            $("#countdown").text(countdown);  // Update the displayed countdown value
+    
             if (countdown === 0) {
                 clearInterval(countdownInterval);
                 checkAnswer(-1);  // Automatically consider the answer wrong when time runs out
             }
         }, 1000);
     }
+    
 
     // Function to load the current question's flag image
     function loadImages() {
@@ -35,6 +37,8 @@ $(document).ready(function () {
     function displayQuestion() {
         // Clear the results list before displaying a new question
         $(".result-list").empty();
+
+        clearInterval(countdownInterval);  // Stop the previous countdown
 
         if (currentQuestion < questions.length) {
             var current = questions[currentQuestion];  // Get the current question object
@@ -82,7 +86,8 @@ $(document).ready(function () {
         if (currentQuestion < questions.length) {
             displayQuestion();  // Display the next question
         } else {
-            goToResults();  // Show results if all questions are answered
+            goToResults(); 
+            console.log("goToResults() function called."); // Show results if all questions are answered
         }
     }
 
@@ -108,29 +113,32 @@ $(document).ready(function () {
     function goToResults() {
         $(".question-card").hide();  // Hide the question card
         $(".results").show();  // Show the results section
-
+        $(".go-leader").show();  // Show the Restart button
+    
+        // Rebind the click event to the Restart button
+        $("#restart-button").off('click').on('click', function () {
+            quizRestart();  // Restart the quiz when the button is clicked
+        });
+    
         // Save the current result to localStorage
         let userData = JSON.parse(localStorage.getItem("userData")) || [];
         userData.push({ nickname: nickname, score: score });
         localStorage.setItem("userData", JSON.stringify(userData));
-
-        // Sort the results and display them
+    
         userData.sort(function (a, b) {
             return b.score - a.score;
         });
-
+    
         var resultHTML = '';
         userData.forEach(function (user, index) {
             resultHTML += '<li>' + user.nickname + ' - ' + user.score + ' points</li>';
         });
-
+    
         $(".result-list").html(resultHTML);
     }
+    
 
     displayQuestion();  // Display the first question when the page loads
 
-    // Event listener for the Restart button
-    $("#restart-button").click(function () {
-        quizRestart();  // Restart the quiz when the button is clicked
-    });
+    
 });
